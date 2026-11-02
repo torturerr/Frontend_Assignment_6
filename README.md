@@ -36,10 +36,9 @@ Task 5, 6 & 7: Technical skills list management, social link ".attr()" modificat
 
 <img width="1917" height="662" alt="image" src="https://github.com/user-attachments/assets/49658888-0d55-4a08-8995-1f463db2e4b7" />
 
-<img width="1917" height="898" alt="image" src="https://github.com/user-attachments/assets/9512f002-5779-4719-9ade-aa74791969d0" />
-
 
 
 Part 4: Animations
 Task 8: Smooth skill bar animations using ".animate()" with width and padding toggle.
 
+<img width="1917" height="898" alt="image" src="https://github.com/user-attachments/assets/9512f002-5779-4719-9ade-aa74791969d0" />
