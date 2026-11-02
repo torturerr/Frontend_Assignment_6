@@ -17,20 +17,26 @@ Part 1: Getting Started with jQuery
 Task 0 & Task 1: Verified jQuery initialization in browser console, styled profile header, and implemented theme toggling.
 
 
+<img width="1916" height="345" alt="image" src="https://github.com/user-attachments/assets/de2c7195-d991-4b12-9016-a3bb40215706" />
 
+<img width="1917" height="975" alt="image" src="https://github.com/user-attachments/assets/1b4bd022-634d-4ba9-a940-c5f9324d825e" />
 
 
 Part 2: jQuery Effects
 Task 2, 3 & 4: About Me visibility controls, image gallery fade transitions, and collapsible panels using slide methods.
 
 
+<img width="1597" height="375" alt="image" src="https://github.com/user-attachments/assets/aa3f3ff3-3858-4391-933d-79524cdf21b8" />
 
+<img width="1917" height="942" alt="image" src="https://github.com/user-attachments/assets/ceecd7d5-4748-427c-ac3a-86b83a70748d" />
 
 
 Part 3: DOM Manipulation with jQuery
 Task 5, 6 & 7: Technical skills list management, social link ".attr()" modification, and real-time input preview.
 
+<img width="1917" height="662" alt="image" src="https://github.com/user-attachments/assets/49658888-0d55-4a08-8995-1f463db2e4b7" />
 
+<img width="1917" height="898" alt="image" src="https://github.com/user-attachments/assets/9512f002-5779-4719-9ade-aa74791969d0" />
 
 
 
