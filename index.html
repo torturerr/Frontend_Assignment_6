@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 6 - jQuery Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body, .card, .accordion-header, .accordion-panel, .list-group-item, .form-control, #previewBox{
+            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+        }
+        .accordion-header{
+            cursor: pointer;
+            background-color: #e9ecef;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-top: 8px;
+            font-weight: 600;
+            user-select: none;
+        }
+        .accordion-header:hover{
+            background-color: #dee2e6;
+        }
+        .accordion-panel{
+            padding: 14px 16px;
+            border: 1px solid #e9ecef;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            display: none;
+        }
+
+        .skill-progress{
+            height: 26px;
+            background-color: #e9ecef;
+            border-radius: 13px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        .skill-bar{
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #0d6efd, #0dcaf0);
+            color: #ffffff;
+            text-align: right;
+            padding: 0;
+            line-height: 26px;
+            font-size: 13px;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            display: none; 
+        }
+
+        #previewBox{
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+        }
+        body.dark-mode{
+            background-color: #121212 !important;
+            color: #e9ecef !important;
+        }
+        body.dark-mode .card{
+            background-color: #1e1e1e !important;
+            color: #e9ecef !important;
+            border-color: #333333 !important;
+        }
+        body.dark-mode .accordion-header{
+            background-color: #2a2a2a !important;
+            color: #ffffff !important;
+        }
+        body.dark-mode .accordion-panel{
+            background-color: #242424 !important;
+            color: #e9ecef !important;
+            border-color: #3a3a3a !important;
+        }
+        body.dark-mode .list-group-item{
+            background-color: #242424 !important;
+            color: #e9ecef !important;
+            border-color: #3a3a3a !important;
+        }
+        body.dark-mode .form-control{
+            background-color: #2a2a2a !important;
+            color: #ffffff !important;
+            border-color: #444444 !important;
+        }
+        body.dark-mode .form-control::placeholder{
+            color: #888888 !important;
+        }
+        body.dark-mode #previewBox{
+            background-color: #242424 !important;
+            color: #e9ecef !important;
+            border-color: #3a3a3a !important;
+        }
+        body.dark-mode .skill-progress{
+            background-color: #333333 !important;
+        }
+        body.dark-mode .alert-info{
+            background-color: #103344 !important;
+            color: #85d7ff !important;
+            border-color: #174b63 !important;
+        }
+        body.dark-mode .text-muted,
+        body.dark-mode small,
+        body.dark-mode .small{
+            color: #b0b8c1 !important;
+        }
+    </style>
+</head>
+<body class="bg-light text-dark py-4" id="mainBody">
+    <div class="container" style="max-width: 800px;">
+        <header class="card p-4 shadow-sm mb-4" id="profileHeader">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 id="portfolioTitle">Welcome to My Portfolio</h2>
+                <div>
+                    <button id="btnLight" class="btn btn-sm btn-outline-secondary">Light Theme</button>
+                    <button id="btnDark" class="btn btn-sm btn-dark">Dark Theme</button>
+                </div>
+            </div>
+            <h4 id="userHeadline" class="text-primary">Aibar Bikanov - Musician, IT Developer</h4>
+            <p id="userIntro" class="text-muted">
+                Welcome! I am an IT student passionate about web development, responsive design, and interactive interfaces.
+            </p>
+            <div>
+                <button id="btnUpdateGreeting" class="btn btn-outline-primary btn-sm">Update Headline (.text / .css)</button>
+            </div>
+        </header>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Part 2: Visibility Methods</h3>
+            <div id="aboutContent">
+                <p class="alert alert-info" id="statusMessage">
+                    <strong>Status:</strong> Currently learning jQuery effects & DOM manipulation!
+                </p>
+                <ul id="funFactsList">
+                    <li>Goal: Master modern JavaScript and front-end frameworks.</li>
+                    <li>Interest: UI/UX design, mobile adaptability, and web animations.</li>
+                </ul>
+            </div>
+            <div class="d-flex gap-2">
+                <button id="btnHideAbout" class="btn btn-warning btn-sm">Hide Status</button>
+                <button id="btnShowAbout" class="btn btn-success btn-sm">Show Status</button>
+                <button id="btnToggleAbout" class="btn btn-secondary btn-sm">Toggle Status</button>
+            </div>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Fade Methods</h3>
+            <div class="row g-3 mb-3 text-center" id="galleryContainer">
+                <div class="col-6">
+                    <img src="Valadilene_01.webp" 
+                         alt="Coding Project" class="img-fluid rounded shadow-sm gallery-img" style="height: 180px; width: 100%; object-fit: cover;">
+                    <small class="d-block mt-1 text-muted">Valadilene</small>
+                </div>
+                <div class="col-6">
+                    <img src="Komkolzgrad_01.jpg" 
+                         alt="Tech Setup" class="img-fluid rounded shadow-sm gallery-img" style="height: 180px; width: 100%; object-fit: cover;">
+                    <small class="d-block mt-1 text-muted">Komkolzgrad</small>
+                </div>
+            </div>
+            <div class="d-flex gap-2">
+                <button id="btnFadeOut" class="btn btn-outline-danger btn-sm">Fade Out</button>
+                <button id="btnFadeIn" class="btn btn-outline-success btn-sm">Fade In</button>
+                <button id="btnFadeToggle" class="btn btn-outline-primary btn-sm">Fade Toggle</button>
+            </div>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Task 4: Slide Methods</h3>
+            <p class="text-muted small">Click any heading below to slideToggle, or use the control buttons.</p>
+
+            <div class="accordion-item">
+                <div class="accordion-header" id="headingMusic">My Favorite Music</div>
+                <div class="accordion-panel" id="panelMusic">
+                    2000s russian alternative, progressive metalcore, thall, primarily dark music.
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" id="headingMovie">My Favorite Movie</div>
+                <div class="accordion-panel" id="panelMovie">
+                    "Matrix", "Green Book", "Back to the Future".
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <div class="accordion-header" id="headingSubject">My Favorite Subject</div>
+                <div class="accordion-panel" id="panelSubject">
+                    Web Technologies & Front-End Development)
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <button id="btnSlideUpAll" class="btn btn-outline-secondary btn-sm">Slide Up All</button>
+                <button id="btnSlideDownAll" class="btn btn-outline-secondary btn-sm">Slide Down All</button>
+            </div>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Task 5: Add & Remove Elements</h3>
+            <div class="input-group mb-3">
+                <input type="text" id="newSkillInput" class="form-control" placeholder="Enter a skill (e.g. React)...">
+                <button id="btnAddSkill" class="btn btn-primary">Add Skill (.append)</button>
+                <button id="btnPrependSkill" class="btn btn-success">Prepend (.prepend)</button>
+                <button id="btnRemoveSkill" class="btn btn-danger">Remove Last (.remove)</button>
+            </div>
+            <ul id="skillsList" class="list-group">
+                <li class="list-group-item">HTML & Semantic Structure</li>
+                <li class="list-group-item">CSS3 & Bootstrap 5</li>
+                <li class="list-group-item">JavaScript</li>
+                <li class="list-group-item">jQuery & DOM Events</li>
+            </ul>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Task 6: Social Link (.attr)</h3>
+            <p>
+                Current link: 
+                <a id="socialLink" href="https://github.com/torturerr" target="_blank" class="fw-bold">https://github.com/torturerr</a>
+            </p>
+            <button id="btnChangeLink" class="btn btn-info btn-sm text-white">Switch to LinkedIn (.attr)</button>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Task 7: Live Form Interaction</h3>
+            <form id="contactPreviewForm">
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Name:</label>
+                        <input type="text" id="inputName" class="form-control" placeholder="Start typing your name...">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email:</label>
+                        <input type="email" id="inputEmail" class="form-control" placeholder="Start typing your email...">
+                    </div>
+                </div>
+            </form>
+            <div class="p-3 rounded" id="previewBox">
+                <h6 class="text-muted">Live Preview:</h6>
+                <p class="mb-1"><strong>Name:</strong> <span id="previewName" class="text-primary">-</span></p>
+                <p class="mb-0"><strong>Email:</strong> <span id="previewEmail" class="text-success">-</span></p>
+            </div>
+        </section>
+
+        <section class="card p-4 shadow-sm mb-4">
+            <h3 class="mb-3">Task 8: Animated Skill Bars (.animate)</h3>
+            <button id="btnAnimateSkills" class="btn btn-primary mb-3">Animate My Skills (Toggle)</button>
+
+            <div>
+                <label class="fw-bold small">HTML5 / CSS3 (90%)</label>
+                <div class="skill-progress">
+                    <div class="skill-bar" data-target="90%">90%</div>
+                </div>
+
+                <label class="fw-bold small">JavaScript (75%)</label>
+                <div class="skill-progress">
+                    <div class="skill-bar" data-target="75%">75%</div>
+                </div>
+
+                <label class="fw-bold small">jQuery (85%)</label>
+                <div class="skill-progress">
+                    <div class="skill-bar" data-target="85%">85%</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            console.log("jQuery is ready!");
+            $('#btnUpdateGreeting').click(function(){
+                $('#userHeadline').text("Hello! Thanks for visiting my interactive portfolio!");
+                $('#userIntro').css({
+                    "color": "#0d6efd",
+                    "font-weight": "bold"
+                });
+            });
+
+            $('#btnDark').click(function(){
+                $('body').addClass('dark-mode');
+                $('body').css("background-color", "#121212");
+                $('.card').css("background-color", "#1e1e1e");
+            });
+
+            $('#btnLight').click(function(){
+                $('body').removeClass('dark-mode');
+                $('body').css("background-color", "#f8f9fa");
+                $('.card').css("background-color", "#ffffff");
+            });
+
+            $('#btnHideAbout').click(function(){
+                $('#statusMessage').hide(400);
+            });
+
+            $('#btnShowAbout').click(function(){
+                $('#statusMessage').show(400);
+            });
+
+            $('#btnToggleAbout').click(function(){
+                $('#statusMessage').toggle(400);
+            });
+
+            $('#btnFadeOut').click(function(){
+                $('.gallery-img').fadeOut(500);
+            });
+
+            $('#btnFadeIn').click(function(){
+                $('.gallery-img').fadeIn(500);
+            });
+
+            $('#btnFadeToggle').click(function(){
+                $('.gallery-img').fadeToggle(500);
+            });
+
+            $('.accordion-header').click(function(){
+                $(this).next('.accordion-panel').slideToggle(300);
+            });
+
+            $('#btnSlideUpAll').click(function(){
+                $('.accordion-panel').slideUp(300);
+            });
+
+            $('#btnSlideDownAll').click(function(){
+                $('.accordion-panel').slideDown(300);
+            });
+
+            $('#btnAddSkill').click(function(){
+                const skill = $('#newSkillInput').val().trim();
+                if (skill !== "") {
+                    $('#skillsList').append('<li class="list-group-item">' + skill + '</li>');
+                    $('#newSkillInput').val('');
+                }
+            });
+
+            $('#btnPrependSkill').click(function(){
+                const skill = $('#newSkillInput').val().trim();
+                if (skill !== "") {
+                    $('#skillsList').prepend('<li class="list-group-item">' + skill + '</li>');
+                    $('#newSkillInput').val('');
+                }
+            });
+
+            $('#btnRemoveSkill').click(function(){
+                $('#skillsList li').last().remove();
+            });
+
+            let isLinkedIn = false;
+            $('#btnChangeLink').click(function(){
+                if (!isLinkedIn) {
+                    $('#socialLink').attr('href', 'https://www.linkedin.com/in/aibar-bikanov-9a04b83b0/').text('https://www.linkedin.com/in/aibar-bikanov-9a04b83b0/');
+                    $(this).text('Switch to GitHub (.attr)');
+                    isLinkedIn = true;
+                } else {
+                    $('#socialLink').attr('href', 'https://github.com/torturerr').text('https://github.com/torturerr');
+                    $(this).text('Switch to LinkedIn (.attr)');
+                    isLinkedIn = false;
+                }
+            });
+
+            $('#inputName').on('input', function(){
+                const val = $(this).val();
+                $('#previewName').text(val !== "" ? val : "-");
+            });
+
+            $('#inputEmail').on('input', function(){
+                const val = $(this).val();
+                $('#previewEmail').text(val !== "" ? val : "-");
+            });
+
+            let skillsAnimated = false;
+            $('#btnAnimateSkills').click(function(){
+                if (!skillsAnimated) {
+                    $('.skill-bar').show().each(function(){
+                        const targetWidth = $(this).data('target');
+                        $(this).css("padding-right", "12px");
+                        $(this).animate({ width: targetWidth }, 1000);
+                    });
+                    skillsAnimated = true;
+                } else {
+                    $('.skill-bar').animate({ width: '0%' }, 600, function() {
+                        $(this).css("padding-right", "0");
+                        $(this).hide();
+                    });
+                    skillsAnimated = false;
+                }
+            });
+
+        });
+    </script>
+</body>
+</html>
